@@ -1,0 +1,289 @@
+/*
+ * kses-rsm-blue.dts - Device Tree file for Keystone RSM Blue board
+ *
+ * Based on sama5d36ek.dtb by  Josh Wu <josh.wu@atmel.com> 
+ *   Copyright (C) 2016 Keystone Electronic Solutions,
+ *                2016 John Eigelaar <john@kses.net>
+ *
+ * Licensed under GPLv2 or later.
+ */
+
+
+/dts-v1/;
+
+#include "sama5d36.dtsi"
+#include "kses-bp-cm.dtsi"
+
+/ {
+	model = "Keystone RSM Blue";
+    compatible = "kses,bluepenguin", "atmel,sama5d36ek", "atmel,sama5d3xmb", "atmel,sama5d3xcm", "atmel,sama5d36", "atmel,sama5d3", "atmel,sama5";
+
+	guinnux {
+		boardid = "5";
+		description = "KSES RSM on BLUE";
+		dtbname = "kses-rsm-blue.dtb";
+		
+		net {
+            wan  = "eth1";
+	        lan  = "eth0";
+	        usb  = "usb0";
+	    };
+	    serial {
+	       /* Config String Format: */
+	       /* device:owner:editable:baud:databits:stopbits:mode */
+	       serial0 = "/dev/ttyS1:rdd:yes:115200:8:1:rs485";
+	       serial1 = "/dev/ttyS2:rdd:yes:115200:8:1:rs485";
+	       serial2 = "/dev/ttyS3:rdd:yes:115200:8:1:rs485";
+	       serial3 = "/dev/ttyS4:rdd:yes:115200:8:1:rs485";
+	       bt      = "/dev/ttyS5:spbt2632:no:115200:8:1:rs232";
+
+	       gps     = "/dev/ttyUSB1:sim5320:no:4000000:8:1:rs232";
+	       gsm     = "/dev/ttyUSB2:sim5320:no:4000000:8:1:rs232";
+	    };			
+	};
+
+	ahb {
+		apb {
+			usart0: serial@f001c000 {
+				pinctrl-names = "default";
+				pinctrl-0 = <&pinctrl_usart0 &pinctrl_usart0_rts_cts>;
+				status = "okay";
+			
+			};
+			
+			usart1: serial@f0020000 {
+				pinctrl-names = "default";
+				pinctrl-0 = <&pinctrl_usart1 &pinctrl_usart1_rts_cts>;
+				status = "okay";
+			};
+			
+			usart2: serial@f8020000 {
+				pinctrl-names = "default";
+				pinctrl-0 = <&pinctrl_usart2 &pinctrl_usart2_rts_cts>;
+				status = "okay";
+			};
+			
+			usart3: serial@f8024000 {
+				pinctrl-names = "default";
+				pinctrl-0 = <&pinctrl_usart3 &pinctrl_usart3_rts_cts>;
+				status = "okay";
+			};
+			
+			uart0: serial@f0024000 {
+				pinctrl-names = "default";
+				status = "okay";
+			};
+			
+			uart1: serial@f8028000 {
+				pinctrl-names = "default";
+				status = "okay";
+			};
+			
+			macb0: ethernet@f0028000 { //gmac
+	                 phy-mode = "mii";
+	                 pinctrl-0 = <&pinctrl_macb0_data_gmii &pinctrl_macb0_signal_gmii>;
+		             status = "okay";
+		             phy {
+				       compatible = "icplus,ic175d";
+				        vlan = <0>; 
+				     };
+		             
+			};
+			
+			macb1: ethernet@f802c000 { //emac
+				phy-mode = "rmii";
+				status = "okay";			
+			};
+			
+			pinctrl@fffff200 {
+				board {
+					pinctrl_led_h: led_h {
+						atmel,pins =
+							<3 30 0x0 0x4>;	/* PD30 GPIO  */
+					};
+					
+					pinctrl_led_sd: led_sd {
+						atmel,pins =
+							<3 28 0x0 0x4>;	/* PD28 GPIO  */
+					};
+				};
+			};
+										
+		};
+
+		usb0: gadget@00500000 {
+			atmel,vbus-gpio = <&pioD 29 0>;
+			pinctrl-names = "default";
+			pinctrl-0 = <&pinctrl_usba_vbus>;
+			status = "okay";
+		};
+
+		usb1: ohci@00600000 {
+			num-ports = <3>;
+			atmel,vbus-gpio = <&pioD 25 0
+					   &pioD 26 1
+					   &pioD 27 1
+					  >;
+			status = "okay";
+		};
+
+		usb2: ehci@00700000 {
+			status = "okay";
+		};
+	};
+
+	leds {
+		compatible = "gpio-leds";		
+
+		sysledg {
+			label = "sysledgreen";
+			gpios = <&pioA 15 0>;	
+			linux,default-trigger = "heartbeat";
+		};
+	};
+	
+	 gnxio {
+    	 compatible = "kses,gnxio";
+    	 wanr {
+    	        label = "LED_WAN_RED";
+    	        def_state = <0>;
+    	        output = <1>;
+    	        gpios = <&pioA 13 0>;
+    	     };    	 
+    	 wang {
+    	        label = "LED_WAN_GREEN";
+    	        def_state = <1>;
+    	        output = <1>;
+    	        gpios = <&pioA 10 0>;
+    	     };    	 
+
+    	 bus0r {
+    	        label = "LED_BUS1_RED";
+    	        def_state = <0>;
+    	        output = <1>;
+    	        gpios = <&pioA 4 0>;
+    	     };    	 
+    	 bus0g {
+    	        label = "LED_BUS1_GREEN";
+    	        def_state = <1>;
+    	        output = <1>;
+    	        gpios = <&pioA 3 0>;
+    	     };    	 
+    	 bus1r {
+    	        label = "LED_BUS2_RED";
+    	        def_state = <0>;
+    	        output = <1>;
+    	        gpios = <&pioA 14 0>;
+    	     };    	 
+    	 bus1g {
+    	        label = "LED_BUS2_GREEN";
+    	        def_state = <1>;
+    	        output = <1>;
+    	        gpios = <&pioA 12 0>;
+    	     };
+    	 bus2r {
+    	        label = "LED_BUS3_RED";
+    	        def_state = <0>;
+    	        output = <1>;
+    	        gpios = <&pioA 11 0>;
+    	     };    	 
+    	 bus2g {
+    	        label = "LED_BUS3_GREEN";
+    	        def_state = <1>;
+    	        output = <1>;
+    	        gpios = <&pioA 9 0>;
+    	     };
+    	 bus3r {
+    	        label = "LED_BUS4_RED";
+    	        def_state = <0>;
+    	        output = <1>;
+    	        gpios = <&pioA 7 0>;
+    	     };    	 
+    	 bus3g {
+    	        label = "LED_BUS4_GREEN";
+    	        def_state = <1>;
+    	        output = <1>;
+    	        gpios = <&pioA 5 0>;
+    	     };
+    	     
+    	 btledr {
+    	        label = "LED_BT_RED";
+    	        def_state = <1>;
+    	        output = <1>;
+    	        gpios = <&pioA 2 0>;
+    	     };    	 
+    	 btledg {
+    	        label = "LED_BT_GREEN";
+    	        def_state = <1>;
+    	        output = <1>;
+    	        gpios = <&pioA 0 0>;
+    	     };
+    	     
+
+    	 gsmledr {
+    	        label = "LED_GSM_RED";
+    	        def_state = <1>;
+    	        output = <1>;
+    	        gpios = <&pioA 8 0>;
+    	     };
+	 gsmledg {
+    	        label = "LED_GSM_GREEN";
+    	        def_state = <1>;
+    	        output = <1>;
+    	        gpios = <&pioA 6 0>;
+    	     };    
+    	 
+    	 
+    	 sysledr {
+    	        label = "LED_SYS_RED";
+    	        def_state = <0>;
+    	        output = <1>;
+    	        gpios = <&pioA 17 0>;
+    	     };  
+    	     
+	buspower {
+			label = "485BUS_POWER";
+			def_state = <0>;
+			output = <1>;
+			gpios = <&pioA 19 0>;
+		};  	 
+		    	 
+	gpsoff {
+			label = "GPS_OFF";
+			def_state = <1>;
+			output = <1>;
+			gpios = <&pioA 16 0>;
+		};  	 
+
+	gsmoff {
+			label = "GSM_OFF";
+			def_state = <1>;
+			output = <1>;
+			gpios = <&pioD 1 0>;
+		};  	 
+		
+	gsmigt {
+			label = "GSM_IGT";
+			def_state = <0>;
+			output = <1>;
+			gpios = <&pioD 5 0>;
+		};  	
+		
+	btreset {
+			label = "BT_RESET";
+			def_state = <1>;
+			output = <1>;
+			gpios = <&pioD 8 0>;
+		};  	  
+		
+	btpair {
+			label = "BT_PAIR";
+			def_state = <1>;
+			output = <0>;
+			gpios = <&pioD 2 0>;
+		};  	 
+		
+
+     };
+	
+};

@@ -1,0 +1,188 @@
+/*
+ * kses-rsm-utility.dts - Device Tree file for Keystone RSM Utility board
+ *
+ * Based on sama5d36ek.dtb by  Josh Wu <josh.wu@atmel.com> 
+ *   Copyright (C) 2016 Keystone Electronic Solutions,
+ *                2016 John Eigelaar <john@kses.net>
+ *
+ * Licensed under GPLv2 or later.
+ */
+
+
+/dts-v1/;
+
+#include "sama5d36.dtsi"
+#include "kses-bp-cm.dtsi"
+
+/ {
+	model = "Keystone RSM Utility";
+    compatible = "kses,bluepenguin", "atmel,sama5d36ek", "atmel,sama5d3xmb", "atmel,sama5d3xcm", "atmel,sama5d36", "atmel,sama5d3", "atmel,sama5";
+		
+	guinnux {
+		boardid = "7";
+		description = "KSES RSM on UTILITY";
+		dtbname = "kses-rsm-utility.dtb";
+		net {           
+	        wan  = "eth0";
+	        usb  = "usb0";
+	    };
+	    serial {
+	       /* Config String Format: */
+	       /* device:owner:editable:baud:databits:stopbits:mode */
+	       serial0 = "/dev/ttyS1:rdd:yes:115200:8:1:rs485";
+	       serial1 = "/dev/ttyS2:rdd:yes:115200:8:1:rs485";
+	       serial2 = "/dev/ttyS3:rdd:yes:115200:8:1:rs485";
+	       gsm     = "/dev/ttyS6:g501s:no:115200:8:1:rs232";
+	    };			
+	};
+
+	ahb {
+		apb {
+			usart0: serial@f001c000 {
+				pinctrl-names = "default";
+				pinctrl-0 = <&pinctrl_usart0 &pinctrl_usart0_rts_cts>;
+				status = "okay";
+			
+			};
+			
+			usart1: serial@f0020000 {
+				pinctrl-names = "default";
+				pinctrl-0 = <&pinctrl_usart1 &pinctrl_usart1_rts_cts>;
+				status = "okay";
+			};
+			
+			usart2: serial@f8020000 {
+				pinctrl-names = "default";
+				pinctrl-0 = <&pinctrl_usart2 &pinctrl_usart2_rts_cts>;
+				status = "okay";
+			};
+			
+			
+			uart1: serial@f8028000 {
+				pinctrl-names = "default";
+				status = "okay";
+			};
+
+			macb1: ethernet@f802c000 { //emac
+				phy-mode = "rmii";
+				status = "okay";			
+			};
+			
+			pinctrl@fffff200 {
+				board {
+					pinctrl_led_h: led_h {
+						atmel,pins =
+							<3 30 0x0 0x4>;	/* PD30 GPIO  */
+					};
+					
+					pinctrl_led_sd: led_sd {
+						atmel,pins =
+							<3 28 0x0 0x4>;	/* PD28 GPIO  */
+					};
+				};
+			};
+										
+		};
+
+		usb0: gadget@00500000 {
+			atmel,vbus-gpio = <&pioD 29 0>;
+			pinctrl-names = "default";
+			pinctrl-0 = <&pinctrl_usba_vbus>;
+			status = "okay";
+		};
+
+		usb1: ohci@00600000 {
+			num-ports = <3>;
+			atmel,vbus-gpio = <&pioD 25 0
+					   &pioD 26 1
+					   &pioD 27 1
+					  >;
+			status = "okay";
+		};
+	};
+
+	leds {
+		compatible = "gpio-leds";		
+
+		sysledg {
+			label = "sysledgreen";
+			gpios = <&pioC 18 0>;	
+			linux,default-trigger = "heartbeat";
+		};
+	};
+	
+	 gnxio {
+    	 compatible = "kses,gnxio";
+    	 wanr {
+    	        label = "LED_WAN_RED";
+    	        def_state = <0>;
+    	        output = <1>;
+    	        gpios = <&pioC 16 0>;
+    	     };    	 
+    	 wang {
+    	        label = "LED_WAN_GREEN";
+    	        def_state = <1>;
+    	        output = <1>;
+    	        gpios = <&pioC 21 0>;
+    	     };    	 
+
+    	 bus0r {
+    	        label = "LED_BUS1_RED";
+    	        def_state = <0>;
+    	        output = <1>;
+    	        gpios = <&pioC 15 0>;
+    	     };    	 
+    	 bus0g {
+    	        label = "LED_BUS1_GREEN";
+    	        def_state = <1>;
+    	        output = <1>;
+    	        gpios = <&pioC 12 0>;
+    	     };    	 
+    	 
+    	 
+    	 
+    	 sysledr {
+    	        label = "LED_SYS_RED";
+    	        def_state = <0>;
+    	        output = <1>;
+    	        gpios = <&pioC 11 0>;
+    	     };  
+    	     
+	pmreset {
+			label = "PM_RESET";
+			def_state = <0>;
+			output = <1>;
+			gpios = <&pioA 4 0>;
+		};  	 
+	    	 
+
+	gsmoff {
+			label = "GSM_OFF";
+			def_state = <1>;
+			output = <1>;
+			gpios = <&pioD 1 0>;
+		};  	 
+		
+	gsmon {
+			label = "GSM_ON";
+			def_state = <0>;
+			output = <1>;
+			gpios = <&pioD 5 0>;
+		};  	
+		
+	gsmreset {
+			label = "GSM_RESET";
+			def_state = <0>;
+			output = <1>;
+			gpios = <&pioD 8 0>;
+		};  	  
+		
+	gsmwake {
+			label = "GSM_WAKE";
+			def_state = <0>;
+			output = <1>;
+			gpios = <&pioD 2 0>;
+		};  	 		
+     };
+	
+};

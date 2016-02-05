@@ -1,0 +1,124 @@
+/*
+ * kses-bp-ek.dts - Device Tree file for Keystone Bluepenguin EK board
+ *
+ * Based on sama5d36ek.dtb by  Josh Wu <josh.wu@atmel.com> 
+ *   Copyright (C) 2016 Keystone Electronic Solutions,
+ *                2016 John Eigelaar <john@kses.net>
+ *
+ * Licensed under GPLv2 or later.
+ */
+/dts-v1/;
+
+#include "sama5d36.dtsi"
+#include "kses-bp-cm.dtsi"
+
+/ {
+	model = "Keystone Bluepenguin EK";
+	compatible = "kses,bluepenguin", "atmel,sama5d36ek", "atmel,sama5d3xmb", "atmel,sama5d3xcm", "atmel,sama5d36", "atmel,sama5d3", "atmel,sama5";
+
+    guinnux {
+		boardid = "4";
+		description = "Guinnux Blue Penguin Evalution Kit";
+		dtbname = "kses-bp-ek.dtb";
+		net {
+		   wan="eth0";
+		   usb="usb0";
+		};			
+	};
+	ahb {
+		apb {
+			
+			usart0: serial@f001c000 {
+				pinctrl-names = "default";
+				pinctrl-0 = <&pinctrl_usart0 &pinctrl_usart0_rts_cts>;
+				status = "okay";
+			
+			};
+			
+			usart1: serial@f0020000 {
+				pinctrl-names = "default";
+				pinctrl-0 = <&pinctrl_usart1 &pinctrl_usart1_rts_cts>;
+				status = "okay";
+			};
+			
+			usart2: serial@f8020000 {
+				pinctrl-names = "default";
+				pinctrl-0 = <&pinctrl_usart2 &pinctrl_usart2_rts_cts>;
+				status = "okay";
+			};
+			
+			usart3: serial@f8024000 {
+				pinctrl-names = "default";
+				pinctrl-0 = <&pinctrl_usart3 &pinctrl_usart3_rts_cts>;
+				status = "okay";
+			};
+			
+			uart0: serial@f0024000 {
+				pinctrl-names = "default";
+				status = "okay";
+			};
+			
+			uart1: serial@f8028000 {
+				pinctrl-names = "default";
+				status = "okay";
+			};
+			
+			macb1: ethernet@f802c000 {
+				phy-mode = "rmii";
+				status = "okay";			
+			};
+			
+			pinctrl@fffff200 {
+				board {
+					pinctrl_led_h: led_h {
+						atmel,pins =
+							<3 30 0x0 0x4>;	/* PD30 GPIO  */
+					};
+					
+					pinctrl_led_sd: led_sd {
+						atmel,pins =
+							<3 28 0x0 0x4>;	/* PD28 GPIO  */
+					};
+				};
+			};
+		};/* APB */
+    
+     	usb0: gadget@00500000 {
+    		atmel,vbus-gpio = <&pioD 29 0>;
+	    	pinctrl-names = "default";
+		    pinctrl-0 = <&pinctrl_usba_vbus>;
+		    status = "okay";
+	    };
+
+	    usb1: ohci@00600000 {
+		   num-ports = <3>;
+		   atmel,vbus-gpio = <&pioD 25 0
+	    	    			   &pioD 26 1
+		    	    		   &pioD 27 1
+			    	    	  >;
+		   status = "okay";
+		};
+
+	    usb2: ehci@00700000 {
+			status = "okay";
+	    };
+	}; /* AHB */
+
+	leds {
+		compatible = "gpio-leds";		
+
+		d1 {
+			label = "d1";
+			gpios = <&pioD 30 1>;	
+			linux,default-trigger = "mmc0";
+		};
+
+		d2 {
+			label = "d2";
+			gpios = <&pioD 28 1>;	
+			linux,default-trigger = "heartbeat";
+		};
+	};
+	
+
+};
