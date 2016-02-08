@@ -1,14 +1,13 @@
---- arch/arm/boot/dts/Makefile  2016-01-31 21:29:37.000000000 +0200
-+++ ../linux-4.4.1-patched/arch/arm/boot/dts/Makefile   2016-02-04 11:52:17.643012475 +0200
+--- arch/arm/boot/dts/Makefile	2016-01-31 21:29:37.000000000 +0200
++++ arch/arm/boot/dts/Makefile.new	2016-02-08 09:10:43.691540501 +0200
 @@ -43,6 +43,10 @@
-        at91-kizbox2.dtb \
-        at91-sama5d2_xplained.dtb \
-        at91-sama5d3_xplained.dtb \
-+       kses-bp-ek.dtb \
-+       kses-rsm-blue.dtb \
-+       kses-glam-comms.dtb \
-+       kses-rsm-utility.dtb \
-        sama5d31ek.dtb \
-        sama5d33ek.dtb \
-        sama5d34ek.dtb \
-
+ 	at91-kizbox2.dtb \
+ 	at91-sama5d2_xplained.dtb \
+ 	at91-sama5d3_xplained.dtb \
++	kses-bp-ek.dtb \
++	kses-rsm-blue.dtb \
++	kses-glam-comms.dtb \
++	kses-rsm-utility.dtb \
+ 	sama5d31ek.dtb \
+ 	sama5d33ek.dtb \
+ 	sama5d34ek.dtb \

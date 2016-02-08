@@ -1,8 +1,8 @@
---- drivers/gpio/Kconfig        2016-01-31 21:29:37.000000000 +0200
-+++ ../linux-4.4.1-patched/drivers/gpio/Kconfig 2016-02-04 17:13:02.516206814 +0200
+--- drivers/gpio/Kconfig	2016-01-31 21:29:37.000000000 +0200
++++ drivers/gpio/Kconfig.new	2016-02-08 09:17:33.100382133 +0200
 @@ -88,6 +88,11 @@
  config GPIO_GENERIC
-        tristate
+ 	tristate
  
 +config GPIO_GNXIO
 +     tristate "Guinnux User Space IO Driver"
@@ -12,14 +12,13 @@
  # put drivers in the right section, in alphabetical order
  
  # This symbol is selected by both I2C and SPI expanders
---- drivers/gpio/Makefile       2016-01-31 21:29:37.000000000 +0200
-+++ ../linux-4.4.1-patched/drivers/gpio/Makefile        2016-02-04 17:17:34.537347669 +0200
+--- drivers/gpio/Makefile	2016-01-31 21:29:37.000000000 +0200
++++ drivers/gpio/Makefile.new	2016-02-08 09:17:48.366882325 +0200
 @@ -11,6 +11,7 @@
  
  # Device drivers. Generally keep list sorted alphabetically
- obj-$(CONFIG_GPIO_GENERIC)     += gpio-generic.o
+ obj-$(CONFIG_GPIO_GENERIC)	+= gpio-generic.o
 +obj-$(CONFIG_GPIO_GNXIO)    += gpio-gnx.o
  
- obj-$(CONFIG_GPIO_104_IDIO_16) += gpio-104-idio-16.o
- obj-$(CONFIG_GPIO_74X164)      += gpio-74x164.o
-
+ obj-$(CONFIG_GPIO_104_IDIO_16)	+= gpio-104-idio-16.o
+ obj-$(CONFIG_GPIO_74X164)	+= gpio-74x164.o

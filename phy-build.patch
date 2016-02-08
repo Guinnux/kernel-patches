@@ -1,24 +1,23 @@
---- drivers/net/phy/Kconfig     2016-01-31 21:29:37.000000000 +0200
-+++ ../linux-4.4.1-patched/drivers/net/phy/Kconfig      2016-02-04 14:23:21.023511017 +0200
+--- drivers/net/phy/Kconfig	2016-01-31 21:29:37.000000000 +0200
++++ drivers/net/phy/Kconfig.new	2016-02-08 09:14:28.782393428 +0200
 @@ -115,6 +115,12 @@
-        tristate "Drivers for ICPlus PHYs"
-        ---help---
-          Currently supports the IP175C and IP1001 PHYs.
-+         
+ 	tristate "Drivers for ICPlus PHYs"
+ 	---help---
+ 	  Currently supports the IP175C and IP1001 PHYs.
++	  
 +config IP175D_PHY
 +    tristate "Driver for ICplus IP175D PHY"
 +    ---help---
 +      Configures IP175D for VLAN functionality.
-+         
++	  
  
  config REALTEK_PHY
-        tristate "Drivers for Realtek PHYs"
---- drivers/net/phy/Makefile    2016-01-31 21:29:37.000000000 +0200
-+++ ../linux-4.4.1-patched/drivers/net/phy/Makefile     2016-02-04 14:20:43.129180810 +0200
+ 	tristate "Drivers for Realtek PHYs"
+--- drivers/net/phy/Makefile	2016-01-31 21:29:37.000000000 +0200
++++ drivers/net/phy/Makefile.new	2016-02-08 09:14:51.505478663 +0200
 @@ -42,3 +42,5 @@
- obj-$(CONFIG_MDIO_BCM_UNIMAC)  += mdio-bcm-unimac.o
- obj-$(CONFIG_MICROCHIP_PHY)    += microchip.o
- obj-$(CONFIG_MDIO_BCM_IPROC)   += mdio-bcm-iproc.o
+ obj-$(CONFIG_MDIO_BCM_UNIMAC)	+= mdio-bcm-unimac.o
+ obj-$(CONFIG_MICROCHIP_PHY)	+= microchip.o
+ obj-$(CONFIG_MDIO_BCM_IPROC)	+= mdio-bcm-iproc.o
 +obj-$(CONFIG_IP175D_PHY)    += ip175d.o
 +
-
