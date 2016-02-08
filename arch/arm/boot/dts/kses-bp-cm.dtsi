@@ -91,6 +91,36 @@
 						atmel,pins =
 							<4 31 0x0 0x4>; /* PE31 GPIO  */
 					};
+					
+					pinctrl_macb0_data_mii: macb0_data_mii {
+						atmel,pins =
+							<1 0 0x1 0x0	/* PB0 periph A GTX0, conflicts with PWMH0 */
+							 1 1 0x1 0x0	/* PB1 periph A GTX1, conflicts with PWML0 */
+							 1 2 0x1 0x0	/* PB2 periph A GTX2, conflicts with TK1 */
+							 1 3 0x1 0x0	/* PB3 periph A GTX3, conflicts with TF1 */
+							 1 4 0x1 0x0	/* PB4 periph A GRX0, conflicts with PWMH1 */
+							 1 5 0x1 0x0	/* PB5 periph A GRX1, conflicts with PWML1 */
+							 1 6 0x1 0x0	/* PB6 periph A GRX2, conflicts with TD1 */
+							 1 7 0x1 0x0>;	/* PB7 periph A GRX3, conflicts with RK1 */
+					};
+
+					pinctrl_macb0_signal_mii: macb0_signal_mii {
+						atmel,pins =
+							<
+							1 8 0x1 0x0	/* PB8 periph A GTXCK, conflicts with PWMH2 */
+							1 9 0x1 0x0	/* PB9 periph A GTXEN, conflicts with PWML2 */
+							1 10 0x1 0x0	/* PB10 periph A GTXER, conflicts with RF1 */
+							1 11 0x1 0x0	/* PB11 periph A GRXCK, conflicts with RD1 */
+							1 12 0x1 0x0	/* PB12 periph A GRXDV, conflicts with PWMH3 */
+							1 13 0x1 0x0	/* PB13 periph A GRXER, conflicts with PWML3 */
+							1 14 0x1 0x0	/* PB14 periph A GCRS, conflicts with CANRX1 */
+							1 15 0x1 0x0	/* PB15 periph A GCOL, conflicts with CANTX1 */
+							1 16 0x1 0x0	/* PB16 periph A GMDC */
+							1 17 0x1 0x0>;	/* PB17 periph A GMDIO */							
+					};
+
+					
+					
 				};	
 			};
 			

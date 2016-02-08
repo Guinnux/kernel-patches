@@ -81,7 +81,7 @@
 			
 			macb0: ethernet@f0028000 { //gmac
 	                 phy-mode = "mii";
-	                 pinctrl-0 = <&pinctrl_macb0_data_gmii &pinctrl_macb0_signal_gmii>;
+	                 pinctrl-0 = <&pinctrl_macb0_data_mii &pinctrl_macb0_signal_mii>;
 		             status = "okay";
 		             phy {
 				       compatible = "icplus,ic175d";
@@ -92,7 +92,8 @@
 			
 			macb1: ethernet@f802c000 { //emac
 				phy-mode = "rmii";
-				status = "okay";			
+				status = "okay";
+							
 			};
 			
 			pinctrl@fffff200 {
