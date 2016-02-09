@@ -13,7 +13,7 @@
 	compatible = "atmel,sama5d3", "atmel,sama5";
 
 	chosen {
-			bootargs = "console=ttyS0,115200 earlyprintk root=/dev/mmcblk0p1 rw rootfstype=ext4 root_opts=data=journal init=/sbin/init rescue=/dev/mtdblock1";
+			bootargs = "console=ttyS0,115200 earlyprintk root=/dev/mmcblk0p1 rw rootfstype=ext4 root_type=ext4 root_opts=data=journal init=/sbin/init rescue=/dev/mtdblock1";
 			stdout-path = "serial0:115200n8";
 		};
 
