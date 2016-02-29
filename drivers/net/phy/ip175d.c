@@ -130,12 +130,18 @@ static int ip175d_probe(struct phy_device *phydev)
         printk("PHY5 details 0x%04X\n",reg_data);
 
     }
+    else if(phydev->addr<=4)
+    {
+        phydev->state = PHY_READY;
+        phydev->supported = PHY_BASIC_FEATURES;
+        phydev->advertising = PHY_BASIC_FEATURES;
+    }
     return 0;
 }
 
 static int ip175d_config_init(struct phy_device *phydev)
 {
-	int err, i;
+		int err, i;
 	static int full_reset_performed = 0;
 	u16 reg_data;
 	struct device_node *np;
@@ -276,9 +282,6 @@ static int ip175d_config_init(struct phy_device *phydev)
         printk("Full reset performed\n");
 	}
 
-
-
-		phydev->state = PHY_UP;
 	return 0;
 }
 
@@ -290,10 +293,10 @@ static int ip175d_read_status(struct phy_device *phydev)
 	for(addr = 0; addr <= 4; addr++)
    {
 	  uint16_t phy_status = mdiobus_read(phydev->bus,addr,IP175D_REG_ST);
-	  if(phy_status & (1<<2))
+	  if(phy_status & IP175D_REG_ST_LINK)
 	  {
 		  link = 1;
-		  if(phydev->link == 0)
+		  if(!phydev->link)
 		  {
 			  printk("Link is OK ");
 			  if(phy_status & (1<<14))
@@ -323,9 +326,9 @@ static int ip175d_read_status(struct phy_device *phydev)
      phydev->link = link;
      if(link)
      {
-   	   phydev->speed = SPEED_100;
+       phydev->speed = SPEED_100;
    	   phydev->duplex = DUPLEX_FULL;
-    	phydev->pause = 0;
+       phydev->pause = 0;
 		phydev->asym_pause = 0;
      }
 	return 0;
@@ -333,7 +336,7 @@ static int ip175d_read_status(struct phy_device *phydev)
 
 static int ip175d_config_aneg(struct phy_device *phydev)
 {
-   return 0;
+	return 0;
 }
 
 static int ip175d_aneg_done(struct phy_device *phydev)
@@ -341,10 +344,10 @@ static int ip175d_aneg_done(struct phy_device *phydev)
 	int aneg = 0;
 	uint16_t addr;
 
-	for(addr = 0; addr <= 4; addr++)
+   for(addr = 0; addr <= 4; addr++)
    {
 	  uint16_t phy_status = mdiobus_read(phydev->bus,addr,IP175D_REG_ST);
-	  if(phy_status & (1<<5))
+	  if(phy_status & IP175D_REG_ST_ANEG)
 	  {
 		  aneg = BMSR_ANEGCOMPLETE;
 	  }
@@ -357,7 +360,7 @@ static struct phy_driver ip175d_driver =
     .phy_id         = 0x02430d80,
     .name           = "ICPlus IP175D",
     .phy_id_mask    = 0x0ffffff0,
-    .features       = (PHY_BASIC_FEATURES)&(~(SUPPORTED_Autoneg)),
+    .features       = (PHY_BASIC_FEATURES),
     .probe          = &ip175d_probe,
     .config_init    = &ip175d_config_init,
     .config_aneg    = &ip175d_config_aneg,
