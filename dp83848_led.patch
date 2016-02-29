@@ -1,0 +1,43 @@
+--- drivers/net/phy/dp83848.c	2016-01-31 21:29:37.000000000 +0200
++++ drivers/net/phy/dp83848-new.c	2016-02-29 17:13:40.638121451 +0200
+@@ -21,6 +21,7 @@
+ /* Registers */
+ #define DP83848_MICR			0x11
+ #define DP83848_MISR			0x12
++#define DP83848_PHYCR			0x19
+ 
+ /* MICR Register Fields */
+ #define DP83848_MICR_INT_OE		BIT(0) /* Interrupt Output Enable */
+@@ -36,6 +37,23 @@
+ #define DP83848_MISR_ED_INT_EN		BIT(6) /* Energy detect */
+ #define DP83848_MISR_LQM_INT_EN		BIT(7) /* Link Quality Monitor */
+ 
++/* PHYCR Register Fields */
++#define DP83848_PHYCR_LEDCNFG      (BIT(5) | BIT(6))
++
++static int dp83848_config_init(struct phy_device *phydev)
++{
++
++	int value = phy_read(phydev,DP83848_PHYCR);
++
++	/* Set the LED Mode to mode 2 */
++	value &= ~(DP83848_PHYCR_LEDCNFG);
++	phy_write(phydev,DP83848_PHYCR,value);
++
++	/* Now carry on as we were */
++	return genphy_config_init(phydev);
++}
++
++
+ static int dp83848_ack_interrupt(struct phy_device *phydev)
+ {
+ 	int err = phy_read(phydev, DP83848_MISR);
+@@ -79,7 +97,7 @@
+ 		.flags		= PHY_HAS_INTERRUPT,
+ 
+ 		.soft_reset	= genphy_soft_reset,
+-		.config_init	= genphy_config_init,
++		.config_init	= dp83848_config_init,
+ 		.suspend	= genphy_suspend,
+ 		.resume		= genphy_resume,
+ 		.config_aneg	= genphy_config_aneg,
