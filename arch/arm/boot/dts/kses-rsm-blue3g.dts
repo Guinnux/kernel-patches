@@ -6,19 +6,18 @@
  *
  * Licensed under GPLv2 or later.
  */
-/include/ "sama5d3x_bluepenguin_cm.dtsi"
+
+#include "sama5d36.dtsi"
+#include "kses-bp-cm.dtsi"
 
 / {
 	model = "Atmel SAMA5 RSM Blue";
 	compatible = "kses,rsmplatform","atmel,sama5d3", "atmel,sama5";
 
-	chosen {
-			bootargs = "console=ttyS0,115200 earlyprintk root=/dev/mmcblk0p1 root_type=ext4 root_opts=data=journal init=/sbin/init rescue=/dev/mtdblock1";
-		};
 		
 	guinnux {
 		boardid = "5";
-		description = "KSES RSM on BLUE";
+		description = "KSES RSM on BLUE 3G";
 		net {
             wan  = "eth1";
 	        lan  = "eth0";
@@ -33,8 +32,8 @@
 	       serial3 = "/dev/ttyS4:rdd:yes:115200:8:1:rs485";
 	       bt      = "/dev/ttyS5:spbt2632:no:115200:8:1:rs232";
 
-	       gps     = "/dev/ttyUSB1:sim5320:no:4000000:8:1:rs232";
-	       gsm     = "/dev/ttyUSB2:sim5320:no:4000000:8:1:rs232";
+	       gps     = "/dev/ttyUSB1:sim5320e:no:4000000:8:1:rs232";
+	       gsm     = "/dev/ttyUSB2:sim5320e:no:4000000:8:1:rs232";
 	    };			
 	};
 

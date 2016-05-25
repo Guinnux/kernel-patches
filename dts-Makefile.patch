@@ -8,6 +8,7 @@
 +	kses-rsm-blue.dtb \
 +	kses-glam-comms.dtb \
 +	kses-rsm-utility.dtb \
++   kses rsm-blue3g.dtb \
  	sama5d31ek.dtb \
  	sama5d33ek.dtb \
  	sama5d34ek.dtb \
