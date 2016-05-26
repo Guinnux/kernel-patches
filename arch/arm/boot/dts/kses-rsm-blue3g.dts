@@ -7,6 +7,8 @@
  * Licensed under GPLv2 or later.
  */
 
+/dts-v1/;
+
 #include "sama5d36.dtsi"
 #include "kses-bp-cm.dtsi"
 
@@ -32,8 +34,8 @@
 	       serial3 = "/dev/ttyS4:rdd:yes:115200:8:1:rs485";
 	       bt      = "/dev/ttyS5:spbt2632:no:115200:8:1:rs232";
 
-	       gps     = "/dev/ttyUSB1:sim5320e:no:4000000:8:1:rs232";
-	       gsm     = "/dev/ttyUSB2:sim5320e:no:4000000:8:1:rs232";
+	       gps     = "/dev/ttyUSB1:sim5360:no:4000000:8:1:rs232";
+	       gsm     = "/dev/ttyUSB2:sim5360:no:4000000:8:1:rs232";
 	    };			
 	};
 
