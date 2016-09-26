@@ -1,0 +1,10 @@
+--- arch/arm/boot/dts/overlays/Makefile	2016-09-19 15:01:04.000000000 +0200
++++ arch/arm/boot/dts/overlays/Makefile.new	2016-09-26 15:36:45.066785992 +0200
+@@ -28,6 +28,7 @@
+ dtbo-$(RPI_DT_OVERLAYS) += dwc-otg.dtbo
+ dtbo-$(RPI_DT_OVERLAYS) += dwc2.dtbo
+ dtbo-$(RPI_DT_OVERLAYS) += enc28j60.dtbo
++dtbo-$(RPI_DT_OVERLAYS) += gnxpi.dtbo
+ dtbo-$(RPI_DT_OVERLAYS) += gpio-ir.dtbo
+ dtbo-$(RPI_DT_OVERLAYS) += gpio-poweroff.dtbo
+ dtbo-$(RPI_DT_OVERLAYS) += hifiberry-amp.dtbo
