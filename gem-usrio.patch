@@ -1,6 +1,14 @@
 --- drivers/net/ethernet/cadence/macb.c	2016-01-31 21:29:37.000000000 +0200
-+++ drivers/net/ethernet/cadence/macb-new.c	2016-02-29 12:45:55.669287665 +0200
-@@ -2758,7 +2758,7 @@
++++ drivers/net/ethernet/cadence/macb-new.c	2016-07-29 10:17:03.975674278 +0200
+@@ -2751,14 +2751,14 @@
+ };
+ 
+ static const struct macb_config sama5d2_config = {
+-	.caps = 0,
++	.caps = MACB_CAPS_USRIO_DEFAULT_IS_MII,
+ 	.dma_burst_length = 16,
+ 	.clk_init = macb_clk_init,
+ 	.init = macb_init,
  };
  
  static const struct macb_config sama5d3_config = {
