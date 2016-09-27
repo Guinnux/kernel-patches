@@ -8,7 +8,7 @@
 			target-path = "/";
 			  __overlay__ {
 					guinnux {
-							description = "Raspberry Pi";
+							description = "Raspberry Pi 3";
 							net {
 					            wan  = "eth0";
 						    };
