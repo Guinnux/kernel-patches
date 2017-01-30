@@ -26,6 +26,7 @@
             wan  = "eth1";
 	        lan  = "eth0";
 	        usb  = "usb0";
+	        wwan = "wwan0";
 	    };
 	    
 	    serial {
